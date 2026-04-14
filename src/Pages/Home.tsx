@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './Home.css'
 import approachImage from '/panet.svg'
 
@@ -7,6 +9,7 @@ type HomeProps = {
 }
 
 const orbitText = 'eveloper   ★   MOBILE   ★   WEBSITE   ★   APPLICATION   ★  D'
+gsap.registerPlugin(ScrollTrigger)
 
 function renderAnimatedWords(
   words: string[],
@@ -46,11 +49,53 @@ export default function Home({ revealReady = false }: HomeProps) {
   const rafRef = useRef<number | null>(null)
   const enableParallaxRef = useRef(true)
   const approachAttractRef = useRef<HTMLDivElement>(null)
+  const approachSectionRef = useRef<HTMLElement>(null)
+  const resumeSectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     enableParallaxRef.current = canHover && !reducedMotion
+  }, [])
+
+  useEffect(() => {
+    const section = resumeSectionRef.current
+    if (!section) return
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reducedMotion) return
+
+    const ctx = gsap.context(() => {
+      gsap.set('.resume-heading, .resume-contact-pill, .resume-left-col, .resume-right-col .resume-card', {
+        opacity: 0,
+      })
+      gsap.set('.resume-heading, .resume-contact-pill', { y: 38 })
+      gsap.set('.resume-left-col', { x: -46 })
+      gsap.set('.resume-right-col .resume-card', { y: 34 })
+
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 78%',
+          end: 'bottom 30%',
+          scrub: 1,
+        },
+      })
+        .to('.resume-heading', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' })
+        .to('.resume-contact-pill', { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }, 0.06)
+        .to('.resume-left-col', { opacity: 1, x: 0, duration: 0.85, ease: 'power2.out' }, 0.12)
+        .to('.resume-right-col .resume-card', {
+          opacity: 1,
+          y: 0,
+          duration: 0.62,
+          ease: 'power2.out',
+          stagger: 0.12,
+        }, 0.2)
+    }, section)
+
+    return () => {
+      ctx.revert()
+    }
   }, [])
 
   useEffect(() => {
@@ -125,6 +170,40 @@ export default function Home({ revealReady = false }: HomeProps) {
       window.removeEventListener('blur', onPointerLeave)
       node.style.setProperty('--ax', '0px')
       node.style.setProperty('--ay', '0px')
+    }
+  }, [])
+
+  useEffect(() => {
+    const section = approachSectionRef.current
+    if (!section) return
+
+    let ticking = false
+
+    const updateProgress = () => {
+      const rect = section.getBoundingClientRect()
+      const viewportHeight = window.innerHeight
+      const totalScrollable = Math.max(rect.height - viewportHeight, 1)
+      const traveled = Math.min(Math.max(-rect.top, 0), totalScrollable)
+      const progress = traveled / totalScrollable
+      section.style.setProperty('--approach-progress', progress.toFixed(4))
+      section.classList.toggle('approach-plus-active', progress > 0.62)
+      section.classList.toggle('approach-section-white', progress > 0.83)
+      ticking = false
+    }
+
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(updateProgress)
+    }
+
+    updateProgress()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
     }
   }, [])
 
@@ -221,7 +300,8 @@ export default function Home({ revealReady = false }: HomeProps) {
           </a>
         </aside>
       </section>
-      <section className="approach-section">
+      <section ref={approachSectionRef} className="approach-section">
+        <div className="approach-pin-stage">
           <div className="approach-container">
             <div className="approach-content">
               <h2 className="approach-title">My Approach</h2>
@@ -350,8 +430,108 @@ export default function Home({ revealReady = false }: HomeProps) {
             </div>
           </div>
           <div className="apprach-footer">
-            <h2>CLARITY + PERFORMANCE</h2>
+            <h2>
+              <span className="apprach-footer-word">CLARITY</span>
+              <span className="apprach-footer-plus">+</span>
+              <span className="apprach-footer-word">PERFORMANCE</span>
+            </h2>
           </div>
+        </div>
+      </section>
+      <section ref={resumeSectionRef} className="resume-section">
+        <div className="resume-content">
+          <header className="resume-header">
+            <h2 className="resume-heading">Moazzam Shah Khan</h2>
+            <p className="resume-role">Software Developer</p>
+            <p className="resume-contact-pill">
+              moazzamshahkhan08@gmail.com | +92-304-8210351 | linkedin.com/in/moazzamshahk | github.com/moazzamshah21
+            </p>
+          </header>
+
+          <div className="resume-grid">
+            <aside className="resume-left-col">
+              <article className="resume-block resume-card">
+                <h3>Education</h3>
+                <p><strong>Bahria University</strong> (Aug 2019 - Jan 2024)</p>
+                <p>Bachelor of Science in Computer Science (Karachi, Pakistan)</p>
+                <p>
+                  Relevant Coursework: Artificial Intelligence, Mobile Application Development, Website Development,
+                  Cloud Computing, OOP, Data Structures, Software Engineering, Database Management System
+                </p>
+              </article>
+
+              <article className="resume-block resume-card">
+                <h3>Technical Skills</h3>
+                <p><strong>Programming Languages:</strong> JavaScript, PHP, HTML, CSS, Dart, Kotlin</p>
+                <p><strong>Libraries/Frameworks:</strong> Flutter, React Native, React.js, Node.js, GSAP, WordPress</p>
+                <p><strong>Tools &amp; OS:</strong> Git, Firebase, Supabase, Jupyter Notebook, Windows</p>
+              </article>
+
+              <article className="resume-block resume-card">
+                <h3>Achievements</h3>
+                <ul>
+                  <li>
+                    Awarded Employee of the Month for three consecutive months in 2024 for consistent high performance,
+                    ownership, and delivery of critical production features.
+                  </li>
+                  <li>
+                    Received Appreciation Award 2025 for outstanding contribution, performance excellence, and impactful
+                    delivery of production-level mobile applications and web platforms.
+                  </li>
+                </ul>
+              </article>
+            </aside>
+
+            <div className="resume-right-col">
+              <article className="resume-block resume-card">
+                <h3>Professional Experience</h3>
+                <p><strong>Mattrics Pvt. Ltd.</strong> (Aug 2023 - Present)</p>
+                <p>Software Developer</p>
+                <ul>
+                  <li>
+                    Developed Yalla Go Express, a Flutter-based super app integrating ride-hailing, food delivery, and pickup
+                    services into a unified platform. Built core UI modules, real-time tracking features, and payment workflows
+                    for both User and Driver apps published on App Store and Google Play.
+                  </li>
+                  <li>
+                    Built Remembery, a React Native smart reminder and lost-item finder application enabling users to track
+                    belongings, manage daily tasks, and improve productivity through intuitive workflows and clean mobile UI.
+                  </li>
+                  <li>
+                    Created Anchor Prayer, a cross-platform React Native application allowing users to manage prayer lists,
+                    share requests, set reminders, and participate in community prayers with scalable architecture.
+                  </li>
+                  <li>
+                    Designed and delivered production-grade web platforms including AuthorsArsenal.com, Jermey, Utopia,
+                    Subscription Food Delivery Platform, Digital Software Labs, and 10Sphere.
+                  </li>
+                  <li>
+                    Developed and published an open-source Flutter package flutter audio cropper on pub.dev, enabling
+                    developers to fetch audio from YouTube videos and crop it to desired lengths.
+                  </li>
+                  <li>
+                    Worked across the full stack using Flutter, React Native, React.js, Node.js, Supabase, WordPress, and PHP
+                    while integrating third-party APIs to deliver scalable production-ready applications.
+                  </li>
+                  <li>
+                    Collaborated with designers and stakeholders to transform product requirements into high-quality user
+                    experiences with emphasis on performance and maintainable architecture.
+                  </li>
+                </ul>
+              </article>
+
+              <article className="resume-block resume-card">
+                <h3>Open Source Contributions</h3>
+                <p><strong>flutter audio cropper (Flutter Package)</strong></p>
+                <p>
+                  Developed and published a Dart-based Flutter package on pub.dev that extracts audio from YouTube videos
+                  and enables cropping to user-defined durations for flexible media usage such as ringtone creation, media
+                  editing, and audio previews in mobile applications.
+                </p>
+              </article>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
   )
