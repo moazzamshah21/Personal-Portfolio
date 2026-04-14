@@ -1,0 +1,12 @@
+.app-root {
+  position: relative;
+  z-index: 0;
+}
+
+body {
+  background: #151517;
+}
+
+a{
+  text-decoration: none;
+}
