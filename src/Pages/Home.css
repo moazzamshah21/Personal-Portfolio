@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Teko:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Teko:wght@500;600;700&display=swap');
 
 * {
   margin: 0;
@@ -674,18 +674,19 @@
     position: relative;
     width: 40%;
     height: 500px;
-    padding: 40px;
+    padding: 48px 40px 40px;
     /* border: 1px solid #fff; */
     background-color: #212124;
     transition: all .7s cubic-bezier(0.25, 1.25, 0.5, 1);
-    overflow: hidden;
+    overflow: visible;
+    /* was hidden — clipped Urdu ascenders and card art; ::before still covers inset */
   }
   
 .approach-section .approach-card::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: url("card1.svg") center no-repeat;
+    background: url("../assets/card1.svg") center no-repeat;
     background-size: 70% 70%;
     z-index: 0;
     transition: none; /* prevent conflicts */
@@ -752,8 +753,10 @@
 .approach-section .approach-card-content-bottom {
     position: relative;
     width: max-content;
-    padding: 10px 14px;
-    overflow: hidden;
+    max-width: 100%;
+    padding: 12px 14px 14px;
+    overflow: visible;
+    /* overflow:hidden was clipping Urdu/Arabic glyph ascenders */
 }
 
 .approach-section .approach-card-content-top::before,
@@ -789,6 +792,9 @@
 .approach-section .approach-card-content-top h2 {
     font-weight: 400;
     font-size: 25px;
+    line-height: 1.65;
+    padding-block: 0.2em;
+    font-family: "Noto Nastaliq Urdu", "Inter", system-ui, sans-serif;
     transition: all .7s cubic-bezier(0.25, 1.25, 0.5, 1);
   }
 

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './Home.css'
-import approachImage from '/panet.svg'
+import approachImage from '../assets/panet.svg'
 
 type HomeProps = {
   revealReady?: boolean
