@@ -8,7 +8,7 @@ type HomeProps = {
   revealReady?: boolean
 }
 
-const orbitText = 'eveloper   ★   MOBILE   ★   WEBSITE   ★   APPLICATION   ★  D'
+const orbitText = 'eveloper   ★   MOBILE   ★   THINGS   ★   APPLICATION   ★  D'
 gsap.registerPlugin(ScrollTrigger)
 
 function renderAnimatedWords(
@@ -255,10 +255,10 @@ export default function Home({ revealReady = false }: HomeProps) {
         <div className="hero-copy">
           <h1>
             {renderAnimatedWords(
-              ['I', 'BUILD', 'MODERN', 'WEBSITES'],
+              ['I', 'BUILD', 'MODERN', 'THINGS'],
               'line-1',
-              'I BUILD MODERN WEBSITES',
-              'WEBSITES',
+              'I BUILD MODERN THINGS',
+              'THINGS',
             )}
             {renderAnimatedWords(['THAT', 'WORK'], 'line-2', 'THAT WORK')}
           </h1>
