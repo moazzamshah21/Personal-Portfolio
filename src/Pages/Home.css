@@ -1059,14 +1059,59 @@
 }
 
 .resume-contact-pill {
+  list-style: none;
+  margin: 0;
+  padding: 10px 12px;
   display: inline-flex;
   flex-wrap: wrap;
-  gap: 6px;
-  padding: 8px 14px;
+  align-items: center;
+  gap: 10px;
   border: 1px solid #d7dde4;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.75);
   width: fit-content;
+}
+
+.resume-contact-pill li {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.resume-contact-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.05);
+  border: 1px solid #d7dde4;
+  color: #0f172a;
+  text-decoration: none;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.resume-contact-link svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+
+.resume-contact-link:hover {
+  transform: translateY(-2px);
+  border-color: #94a3b8;
+  background: rgba(15, 23, 42, 0.08);
+  color: #0b1220;
+}
+
+.resume-contact-link:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
 }
 
 .resume-grid {
@@ -1153,6 +1198,7 @@
   .resume-contact-pill {
     border-radius: 14px;
     width: 100%;
+    justify-content: center;
   }
 
   .resume-card {

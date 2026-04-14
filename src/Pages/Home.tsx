@@ -4,6 +4,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './Home.css'
 import approachImage from '../assets/panet.svg'
 
+const CONTACT = {
+  email: 'moazzamshahkhan08@gmail.com',
+  phoneDisplay: '+92-304-8210351',
+  phoneTel: 'tel:+923048210351',
+  github: 'https://github.com/moazzamshah21',
+  linkedin: 'https://www.linkedin.com/in/moazzamshahk',
+} as const
+
 type HomeProps = {
   revealReady?: boolean
 }
@@ -278,9 +286,9 @@ export default function Home({ revealReady = false }: HomeProps) {
         <aside className="name-rail" aria-label="Social links">
           <a
             className="social-link"
-            href="https://github.com/"
+            href={CONTACT.github}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             aria-label="GitHub"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -289,9 +297,9 @@ export default function Home({ revealReady = false }: HomeProps) {
           </a>
           <a
             className="social-link"
-            href="https://linkedin.com/"
+            href={CONTACT.linkedin}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             aria-label="LinkedIn"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -443,9 +451,57 @@ export default function Home({ revealReady = false }: HomeProps) {
           <header className="resume-header">
             <h2 className="resume-heading">Moazzam Shah Khan</h2>
             <p className="resume-role">Software Developer</p>
-            <p className="resume-contact-pill">
-              moazzamshahkhan08@gmail.com | +92-304-8210351 | linkedin.com/in/moazzamshahk | github.com/moazzamshah21
-            </p>
+            <ul className="resume-contact-pill" aria-label="Contact and profiles">
+              <li>
+                <a
+                  className="resume-contact-link"
+                  href={`mailto:${CONTACT.email}`}
+                  aria-label={`Email ${CONTACT.email}`}
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
+                    <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  className="resume-contact-link"
+                  href={CONTACT.phoneTel}
+                  aria-label={`Call ${CONTACT.phoneDisplay}`}
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M1.5 5.25c0-.621.504-1.125 1.125-1.125h1.372c.496 0 .93.334 1.05.813l1.123 4.493a1.125 1.125 0 0 1-.527 1.198l-1.007.673a12.08 12.08 0 0 0 6.692 6.692l.674-1.007a1.125 1.125 0 0 1 1.198-.527l4.493 1.123c.479.12.813.554.813 1.05v1.372c0 .621-.504 1.125-1.125 1.125C13.47 22.5 1.5 10.53 1.5 5.25Z" />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  className="resume-contact-link"
+                  href={CONTACT.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn profile"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5Zm-2 6h4v12h-4v-12Zm7 0h3.8v1.7h.1c.5-1 1.8-2 3.8-2 4 0 4.7 2.6 4.7 6v6.3h-4v-5.6c0-1.4 0-3.1-2-3.1s-2.3 1.5-2.3 3v5.7h-4v-12Z" />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  className="resume-contact-link"
+                  href={CONTACT.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub profile"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 .5A12 12 0 0 0 8.2 23.9c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.3-1.2-1.7-1.2-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.3 1 .1-.7.4-1.2.7-1.5-2.7-.3-5.6-1.3-5.6-6A4.7 4.7 0 0 1 6 8.8c-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.2 1.2a10.9 10.9 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.7.2 2.9.1 3.2A4.7 4.7 0 0 1 19.7 12c0 4.7-2.9 5.7-5.6 6 .4.3.8 1 .8 2v3c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z" />
+                  </svg>
+                </a>
+              </li>
+            </ul>
           </header>
 
           <div className="resume-grid">
